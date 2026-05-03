@@ -1,0 +1,327 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  height: 2000px;
+}
+
+/* ===================== */
+/*        HEADER         */
+/* ===================== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: transparent;
+  backdrop-filter: blur(10px);
+
+  transition: 0.3s ease;
+
+  z-index: 3000;
+}
+
+header.scrolled,
+header.menu-open {
+  background: white;
+  backdrop-filter: none;
+}
+
+/* ===================== */
+/*         LOGO          */
+/* ===================== */
+.logo img {
+  height: 80px;
+}
+
+/* ===================== */
+/*     NAV DESKTOP       */
+/* ===================== */
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  position: relative;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 5px;
+  letter-spacing: 0.3px;
+
+  color: white;
+  transition: color 0.3s ease;
+}
+
+/* ❌ DESKTOP: sin flechas */
+nav ul li a span {
+  display: none;
+}
+
+header.scrolled nav ul li a,
+header.menu-open nav ul li a {
+  color: black;
+}
+
+nav ul li a:hover {
+  color: #007bff;
+}
+
+/* underline */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 0%;
+  height: 2px;
+  background: #007bff;
+
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* ===================== */
+/*      HAMBURGUESA      */
+/* ===================== */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+
+  z-index: 3100;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 4px;
+  transition: 0.3s;
+}
+
+header.scrolled .menu-toggle span,
+header.menu-open .menu-toggle span {
+  background: black;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ===================== */
+/*        OVERLAY        */
+/* ===================== */
+#overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.5);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+
+  z-index: 2900;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===================== */
+/*     WHATSAPP BTN      */
+/* ===================== */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  width: 100px;
+  height: 100px;
+
+  z-index: 2000;
+
+  transition: 0.3s;
+}
+
+.whatsapp-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ===================== */
+/*        MOBILE         */
+/* ===================== */
+@media (max-width: 1068px) {
+
+  .prev, .next {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .logo img {
+    height: clamp(55px, 8vw, 70px);
+  }
+
+  /* ===================== */
+  /*   FULL SCREEN MENU    */
+  /* ===================== */
+  nav {
+    position: fixed;
+
+    top: 80px;
+    left: 0;
+
+    width: 100%;
+    height: calc(100vh - 80px);
+
+    background: rgba(245, 245, 245, 0.98);
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+    padding: 20px;
+
+    transform: translateX(100%);
+    opacity: 0;
+
+    transition: transform 0.4s ease, opacity 0.3s ease;
+
+    z-index: 3100;
+
+    pointer-events: none;
+  }
+
+  nav.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    border-bottom: 1px solid #ddd;
+  }
+
+  nav ul li a {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 20px;
+    width: 100%;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    color: #1d3b63;
+  }
+
+  /* ===================== */
+  /* FLECHAS ANIMADAS      */
+  /* ===================== */
+  nav ul li a span {
+    display: inline-block;
+
+    opacity: 0;
+    transform: translateX(-10px);
+
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  nav.active ul li a span {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+    /* OCULTAR FLECHAS DEL CARRUSEL EN MÓVIL */
+  .prev,
+  .next {
+    display: none !important;
+  }
+}
+/* ===================== */
+/* BOTÓN SCROLL TOP      */
+/* ===================== */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  left: auto;
+
+  width: 60px;
+  height: 60px;
+
+  background: #007bff;
+  color: white;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  text-decoration: none;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: 0.3s ease;
+
+  z-index: 2000;
+}
+
+/* cuando aparece */
+.scroll-top-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* hover */
+.scroll-top-btn:hover {
+  transform: scale(1.1);
+  background: #0056d6;
+}
